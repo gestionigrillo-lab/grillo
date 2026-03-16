@@ -48,6 +48,47 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  # --- Assistente Condominiale Ufficio ---
+  assistente-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: assistente_condominiale
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - assistente_pgdata:/var/lib/postgresql/data
+      - ./assistente-condominiale/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d assistente_condominiale"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  assistente-api:
+    build:
+      context: ./assistente-condominiale
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://postgres:postgres@assistente-db:5432/assistente_condominiale"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      CLAUDE_MODEL: "${CLAUDE_MODEL:-claude-sonnet-4-20250514}"
+      TWILIO_ACCOUNT_SID: "${TWILIO_ACCOUNT_SID:-}"
+      TWILIO_AUTH_TOKEN: "${TWILIO_AUTH_TOKEN:-}"
+      TWILIO_PHONE_NUMBER: "${TWILIO_PHONE_NUMBER:-}"
+      ESCALATION_PHONE: "${ESCALATION_PHONE:-}"
+      ESCALATION_EMAIL: "${ESCALATION_EMAIL:-admin@gestionigrillo.it}"
+      FRONTEND_URL: "${FRONTEND_URL:-http://localhost:5173}"
+      APP_DEBUG: "true"
+    depends_on:
+      assistente-db:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   pgdata:
   redisdata:
+  assistente_pgdata:
