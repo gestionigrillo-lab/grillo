@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SecureVault" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/vault_primary</item>
+        <item name="colorPrimaryDark">@color/vault_primary_dark</item>
+        <item name="colorAccent">@color/vault_accent</item>
+        <item name="android:windowSecure">true</item>
+    </style>
+</resources>

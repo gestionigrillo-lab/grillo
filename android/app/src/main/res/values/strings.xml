@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Secure Samsung Vault</string>
+    <string name="enter_pin">Inserisci PIN</string>
+    <string name="use_biometric">Usa biometria</string>
+    <string name="vault_locked">Vault bloccato</string>
+    <string name="enroll_device">Registra dispositivo</string>
+    <string name="enrollment_success">Dispositivo registrato</string>
+    <string name="enrollment_failed">Registrazione fallita</string>
+    <string name="pin_hint">PIN a 6 cifre</string>
+    <string name="confirm_pin">Conferma PIN</string>
+    <string name="biometric_title">Autenticazione biometrica</string>
+    <string name="biometric_subtitle">Accedi al Vault</string>
+    <string name="wipe_confirm">Confermi la cancellazione di tutti i dati del vault?</string>
+</resources>
